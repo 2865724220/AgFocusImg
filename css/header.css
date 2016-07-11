@@ -1,0 +1,15 @@
+/* CSS Document */
+/**header部分**/
+*{margin:0px; padding:0px; }
+
+.header{width:100%; height:50px; text-align:center;}
+.header{ background:url(../images/header.png) no-repeat; background-size:100% 100%;}
+.house{width: 25px; height: auto; margin: 10px; position: absolute; left: 3%;}
+.hp{ display:inline-block; height:50px; line-height:50px; color:#fff; font-size:18px;}
+ul{ list-style:none;}
+/**首页部分**/
+.index_bg{ background:#567ec6;}
+.index_div{width: 45%; margin: 0 auto;border-bottom: 1px solid #3d609d; padding: 3% 0% 8% 10%; margin-bottom: 5%;}
+.index_eachimg{ vertical-align:middle;width:15%; margin-right:10%;}
+.index_eachspan{color:#fff; font-size:18px;}
+

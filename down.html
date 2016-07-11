@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>资料下载</title>
+	<link href="css/header.css" rel="stylesheet" type="text/css">
+	<link href="css/down.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="js/angular.min.js"></script>
+</head>
+<body ng-app="mainApp">
+	<div class="header">
+		<img class="house" src="images/house.png">
+		<p class="hp">资料下载</p>
+	</div>
+	<ul class="down_con" id="aaaa" ng-controller="downInfo">
+
+		<li ng-repeat="info in infos">
+
+			<img class="down_wen" src="{{info.resourcepath |filterImg}}" />
+			<span class="down_span">{{info.resourcename}}</span>
+			<div class="down_lidiv">
+				<a href="http://110.173.13.99:8080/cgvw/upload/{{info.resourcepath}}">下载</a>
+			</div>
+		</li>
+		
+	</ul>
+	
+</body>
+<script type="text/javascript">
+ //    var infos=[
+	// {
+	// 	id: "1",
+	// 	resourcename: "1.凯捷全球能源电力行业介绍",
+	// 	resourcepath: "1.pdf",
+	// 	state: "closed"
+	// },
+	// {
+	// 	id: "2",
+	// 	resourcename: "2.凯捷全球能源电力行业介绍",
+	// 	resourcepath: "2.doc",
+	// 	state: "closed"
+	// },
+	// {
+	// 	id: "3",
+	// 	resourcename: "3.凯捷全球能源电力行业介绍",
+	// 	resourcepath: "3.txt",
+	// 	state: "closed"
+	// }
+	// ];
+
+ 
+	var mainapp = angular.module('mainApp',[]);
+	mainapp.controller('downInfo',function($scope,$http){
+		$http.get("http://110.173.13.99:8080/cgvw/resourceManagerController.do?datagrid&field=id,resourcename,resourcepath,")
+		.success(function(response){
+			$scope.infos =response.rows;
+			console.log($scope.infos);			  			
+		});
+		// $scope.infos = infos;
+		 		
+	});
+	
+	mainapp.filter('filterImg',function(){
+		return function(value){
+			if(value.indexOf('pdf')>=0){
+				return "images/file_pdf.png";
+			}
+			if(value.indexOf("doc")>=0){
+				return "images/file_word.png"; 
+			}
+			if(value.indexOf("ppt")>=0){
+				return "images/file_ppt.png"; 
+			}
+			if(value.indexOf("xls")>=0){
+				return "images/file_xls.png"; 
+			}
+			if(value.indexOf("txt")>=0){
+				return "images/file_txt.png"; 
+			}
+			if(value.indexOf("mp3")>=0){
+				return "images/file_mp3.png"; 
+			}
+			if(value.indexOf("png")>=0 || value.indexOf("jpg")>=0 || value.indexOf("gif")>=0){
+				return "images/file_img.jpg";
+			}
+			if(value.indexOf("mp4")>=0 || value.indexOf("avi")>=0 || value.indexOf("rm")>=0){
+				return "images/file_video.png";
+			}
+
+			return "images/file_all.png";
+		}
+	})
+</script>
+</html>
