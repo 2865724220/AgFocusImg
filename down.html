@@ -29,67 +29,106 @@
 	
 </body>
 <script type="text/javascript">
- //    var infos=[
-	// {
-	// 	id: "1",
-	// 	resourcename: "1.凯捷全球能源电力行业介绍",
-	// 	resourcepath: "1.pdf",
-	// 	state: "closed"
-	// },
-	// {
-	// 	id: "2",
-	// 	resourcename: "2.凯捷全球能源电力行业介绍",
-	// 	resourcepath: "2.doc",
-	// 	state: "closed"
-	// },
-	// {
-	// 	id: "3",
-	// 	resourcename: "3.凯捷全球能源电力行业介绍",
-	// 	resourcepath: "3.txt",
-	// 	state: "closed"
-	// }
-	// ];
+    var infos=[
+	{
+		id: "1",
+		resourcename: "1.凯捷全球能源电力行业介绍",
+		resourcepath: "1.pdf",
+		state: "closed"
+	},
+	{
+		id: "2",
+		resourcename: "2.凯捷全球能源电力行业介绍",
+		resourcepath: "2.doc",
+		state: "closed"
+	},
+	{
+		id: "3",
+		resourcename: "3.凯捷全球能源电力行业介绍",
+		resourcepath: "3.txt",
+		state: "closed"
+	},
+	{
+		id: "4",
+		resourcename: "4.凯捷全球能源电力行业介绍",
+		resourcepath: "4.png",
+		state: "closed"
+	},
+	{
+		id: "5",
+		resourcename: "5.凯捷全球能源电力行业介绍",
+		resourcepath: "5.jpg",
+		state: "closed"
+	}
+	,
+	{
+		id: "6",
+		resourcename: "6.凯捷全球能源电力行业介绍",
+		resourcepath: "6.gif",
+		state: "closed"
+	}
+	];
 
  
 	var mainapp = angular.module('mainApp',[]);
 	mainapp.controller('downInfo',function($scope,$http){
-		$http.get("http://110.173.13.99:8080/cgvw/resourceManagerController.do?datagrid&field=id,resourcename,resourcepath,")
-		.success(function(response){
-			$scope.infos =response.rows;
-			console.log($scope.infos);			  			
-		});
-		// $scope.infos = infos;
+	// 	$http.get("http://110.173.13.99:8080/cgvw/resourceManagerController.do?datagrid&field=id,resourcename,resourcepath,")
+	// 	.success(function(response){
+	// 		$scope.infos =response.rows;
+	// 		console.log($scope.infos);			  			
+	// 	});
+		$scope.infos = infos;
 		 		
 	});
 	
 	mainapp.filter('filterImg',function(){
 		return function(value){
-			if(value.indexOf('pdf')>=0){
-				return "images/file_pdf.png";
-			}
-			if(value.indexOf("doc")>=0){
-				return "images/file_word.png"; 
-			}
-			if(value.indexOf("ppt")>=0){
-				return "images/file_ppt.png"; 
-			}
-			if(value.indexOf("xls")>=0){
-				return "images/file_xls.png"; 
-			}
-			if(value.indexOf("txt")>=0){
-				return "images/file_txt.png"; 
-			}
-			if(value.indexOf("mp3")>=0){
-				return "images/file_mp3.png"; 
-			}
-			if(value.indexOf("png")>=0 || value.indexOf("jpg")>=0 || value.indexOf("gif")>=0){
-				return "images/file_img.jpg";
-			}
-			if(value.indexOf("mp4")>=0 || value.indexOf("avi")>=0 || value.indexOf("rm")>=0){
-				return "images/file_video.png";
+			// console.log(value);
+			var suffix = value.substring(value.lastIndexOf(".")+1, value.length);
+			// console.log(suffix);
+			switch(suffix){
+				case 'pdf': 
+					return "images/file_pdf.png"; break;
+				case 'doc': 
+					return "images/file_word.png"; break;
+				case 'ppt': 
+					return "images/file_ppt.png"; break;
+				case 'png': 
+				case 'jpg':
+				case 'gif':
+					return "images/file_img.jpg"; break;
+				case 'txt': 
+					return "images/file_txt.png"; break;
+				default:
+					return "images/file_all.png";
 			}
 
-			return "images/file_all.png";
+			// if(value.indexOf('pdf')>=0){
+			// 	return "images/file_pdf.png";
+			// }
+			// if(value.indexOf("doc")>=0){
+			// 	return "images/file_word.png"; 
+			// }
+			// if(value.indexOf("ppt")>=0){
+			// 	return "images/file_ppt.png"; 
+			// }
+			// if(value.indexOf("xls")>=0){
+			// 	return "images/file_xls.png"; 
+			// }
+			// if(value.indexOf("txt")>=0){
+			// 	return "images/file_txt.png"; 
+			// }
+			// if(value.indexOf("mp3")>=0){
+			// 	return "images/file_mp3.png"; 
+			// }
+			// if(value.indexOf("png")>=0 || value.indexOf("jpg")>=0 || value.indexOf("gif")>=0){
+			// 	return "images/file_img.jpg";
+			// }
+			// if(value.indexOf("mp4")>=0 || value.indexOf("avi")>=0 || value.indexOf("rm")>=0){
+			// 	return "images/file_video.png";
+			// }
+
+			// return "images/file_all.png";
 		}
 	})
 </script>
