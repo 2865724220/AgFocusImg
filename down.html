@@ -7,77 +7,87 @@
 	<title>资料下载</title>
 	<link href="css/header.css" rel="stylesheet" type="text/css">
 	<link href="css/down.css" rel="stylesheet" type="text/css">
+	<link href="css/loading.css" rel="stylesheet" type="text/css">
 	<script type="text/javascript" src="js/angular.min.js"></script>
+	<style type="text/css">
+		.wrapper{
+			position:relative;
+		}
+		.load{
+			position: absolute;
+			width: 100%;
+			height: 320px;
+			overflow: hidden;
+			/*background-color: rgba(0, 0, 0, 0.06);*/
+			color: #413E3E;
+			text-align: center;
+			/*top: 0;*/
+
+		}
+
+	
+	</style>
 </head>
-<body ng-app="mainApp">
+<body ng-app="mainApp" ng-controller="downInfo">
 	<div class="header">
 		<img class="house" src="images/house.png">
 		<p class="hp">资料下载</p>
 	</div>
-	<ul class="down_con" id="aaaa" ng-controller="downInfo">
+	<div class="wrapper">
+		<ul class="down_con" id="aaaa"  ng-show="loadC">
 
-		<li ng-repeat="info in infos">
+			<li ng-repeat="info in infos">
 
-			<img class="down_wen" src="{{info.resourcepath |filterImg}}" />
-			<span class="down_span">{{info.resourcename}}</span>
-			<div class="down_lidiv">
-				<a href="http://110.173.13.99:8080/cgvw/upload/{{info.resourcepath}}">下载</a>
+				<img class="down_wen" src="{{info.resourcepath |filterImg}}" />
+				<span class="down_span">{{info.resourcename}}</span>
+				<div class="down_lidiv">
+					<a href="http://110.173.13.99:8080/cgvw/upload/{{info.resourcepath}}">下载</a>
+				</div>
+			</li>
+
+		</ul>
+		<div class="load" ng-show="load">
+			<div class="spinner">
+				<div class="spinner-container container1">
+					<div class="circle1"></div>
+					<div class="circle2"></div>
+					<div class="circle3"></div>
+					<div class="circle4"></div>
+				</div>
+				<div class="spinner-container container2">
+					<div class="circle1"></div>
+					<div class="circle2"></div>
+					<div class="circle3"></div>
+					<div class="circle4"></div>
+				</div>
+				<div class="spinner-container container3">
+					<div class="circle1"></div>
+					<div class="circle2"></div>
+					<div class="circle3"></div>
+					<div class="circle4"></div>
+				</div>
 			</div>
-		</li>
-		
-	</ul>
-	
-</body>
-<script type="text/javascript">
-    var infos=[
-	{
-		id: "1",
-		resourcename: "1.凯捷全球能源电力行业介绍",
-		resourcepath: "1.pdf",
-		state: "closed"
-	},
-	{
-		id: "2",
-		resourcename: "2.凯捷全球能源电力行业介绍",
-		resourcepath: "2.doc",
-		state: "closed"
-	},
-	{
-		id: "3",
-		resourcename: "3.凯捷全球能源电力行业介绍",
-		resourcepath: "3.txt",
-		state: "closed"
-	},
-	{
-		id: "4",
-		resourcename: "4.凯捷全球能源电力行业介绍",
-		resourcepath: "4.png",
-		state: "closed"
-	},
-	{
-		id: "5",
-		resourcename: "5.凯捷全球能源电力行业介绍",
-		resourcepath: "5.jpg",
-		state: "closed"
-	}
-	,
-	{
-		id: "6",
-		resourcename: "6.凯捷全球能源电力行业介绍",
-		resourcepath: "6.gif",
-		state: "closed"
-	}
-	];
+		</div>
+	</div>
 
- 
+</body>
+	<script type="text/javascript">
+
 	var mainapp = angular.module('mainApp',[]);
-	mainapp.controller('downInfo',function($scope,$http){
-	// 	$http.get("http://110.173.13.99:8080/cgvw/resourceManagerController.do?datagrid&field=id,resourcename,resourcepath,")
-	// 	.success(function(response){
-	// 		$scope.infos =response.rows;
-	// 		console.log($scope.infos);			  			
-	// 	});
-		$scope.infos = infos;
+	mainapp.controller('downInfo',function($scope,$http,$timeout){
+		$scope.load = true;
+		$scope.loadC = false;
+
+	 	$timeout(function(){
+	 	$http.get("http://110.173.13.99:8080/cgvw/resourceManagerController.do?datagrid&field=id,resourcename,resourcepath")
+		.success(function(response){
+			$scope.infos =response.rows;
+			console.log($scope.infos);
+			$scope.load = false;			  			
+			$scope.loadC = true;			  			
+		});
+	 	},1000);
+		// $scope.infos = infos;
 		 		
 	});
 	
